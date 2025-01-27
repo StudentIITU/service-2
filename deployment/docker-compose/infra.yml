@@ -2,7 +2,6 @@ name: 'spring-boot-microservices-course'
 services:
   catalog-db:
     image: postgres:17-alpine
-    platform: linux/arm64/v8
     container_name: catalog-db
     environment:
       - POSTGRES_USER=postgres
@@ -22,7 +21,6 @@ services:
 
   orders-db:
     image: postgres:17-alpine
-    platform: linux/arm64/v8
     container_name: orders-db
     environment:
       - POSTGRES_USER=postgres
@@ -42,7 +40,6 @@ services:
 
   bookstore-rabbitmq:
     image: rabbitmq:3.12.11-management
-    platform: linux/arm64/v8
     container_name: bookstore-rabbitmq
     environment:
       - RABBITMQ_DEFAULT_USER=guest
@@ -59,4 +56,30 @@ services:
       resources:
         limits:
           memory: 500m
+
+  notifications-db:
+    image: postgres:17-alpine
+    container_name: notifications-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "35432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+
+  mailpit:
+    image: axllent/mailpit:v1.22
+    container_name: mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
 

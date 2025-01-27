@@ -1,3 +1,4 @@
 rootProject.name = 'service-2'
 include 'catalog-service'
 include 'order-service'
+include 'notification-service'
