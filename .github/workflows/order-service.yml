@@ -6,7 +6,7 @@ on:
       - order-service/**
     branches:
       - '**'
-      -
+
 jobs:
   build:
     name: Build
@@ -17,6 +17,7 @@ jobs:
     defaults:
       run:
         working-directory: ${{ env.working-directory }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -25,10 +26,15 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: 'maven'
+          cache: 'gradle'  # Changed from 'maven' to 'gradle'
 
-      - name: Build with Maven
-        run: ./mvnw -ntp verify
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: wrapper
+
+      - name: Build with Gradle
+        run: ./gradlew build test  # Equivalent to Maven's verify
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -38,6 +44,6 @@ jobs:
 
       - name: Build and Publish Docker Image
         run: |
-          ./mvnw spring-boot:build-image -DskipTests
+          ./gradlew bootBuildImage --imageName=$DOCKER_IMAGE_NAME
           echo "Pushing the image $DOCKER_IMAGE_NAME to Docker Hub..."
           docker push $DOCKER_IMAGE_NAME
