@@ -1,4 +1,4 @@
-package com.damir.notificationservice.config.domain;
+package com.damir.notificationservice.domain;
 
 import com.damir.notificationservice.ApplicationProperties;
 import com.damir.notificationservice.domain.models.OrderCancelledEvent;
@@ -16,10 +16,8 @@ import org.springframework.stereotype.Service;
 public class NotificationService {
     private static final Logger log = LoggerFactory.getLogger(NotificationService.class);
 
-
     private final JavaMailSender emailSender;
     private final ApplicationProperties properties;
-
 
     public NotificationService(JavaMailSender emailSender, ApplicationProperties properties) {
         this.emailSender = emailSender;

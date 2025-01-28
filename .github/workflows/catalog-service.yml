@@ -1,22 +1,21 @@
-name: Catalog Service CI/CD
+name: Catalog Service
 
 on:
   push:
-    branches: [ "main" ]
     paths:
-      - 'catalog-service/**'
+      - catalog-service/**
+    branches:
+      - 'main'
   pull_request:
-    branches: [ "main" ]
-    paths:
-      - 'catalog-service/**'
+    branches: [main]
 
-env:
-  DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/catalog-service
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      working-directory: ./catalog-service
+      DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/bookstore-catalog-service
     steps:
       - uses: actions/checkout@v3
 

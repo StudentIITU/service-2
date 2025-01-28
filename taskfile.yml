@@ -25,6 +25,7 @@ tasks:
     cmds:
       - "{{.GRADLEW}} :catalog-service:bootBuildImage -x test"
       - "{{.GRADLEW}} :order-service:bootBuildImage -x test"
+      - "{{.GRADLEW}} :notification-service:bootBuildImage -x test"
 
   start_infra:
     cmds:

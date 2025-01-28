@@ -1,4 +1,5 @@
 package com.damir.notificationservice.domain.models;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 
